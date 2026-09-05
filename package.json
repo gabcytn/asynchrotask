@@ -1,0 +1,29 @@
+{
+  "name": "asynchrotask",
+  "version": "1.0.0",
+  "description": "Task Management API",
+  "homepage": "https://github.com/gabcytn/asynchrotask#readme",
+  "bugs": {
+    "url": "https://github.com/gabcytn/asynchrotask/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabcytn/asynchrotask.git"
+  },
+  "license": "ISC",
+  "author": "Gabriel Cayetano",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.4.1",
+    "typescript": "^7.0.2"
+  }
+}
