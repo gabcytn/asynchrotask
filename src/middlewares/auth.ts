@@ -1,5 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
+
+interface CustomPayload extends JwtPayload {
+  email: string;
+}
 
 export async function authJwt(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
@@ -12,7 +16,8 @@ export async function authJwt(req: Request, res: Response, next: NextFunction) {
     const verified = jwt.verify(
       token,
       process.env.JWT_SECRET || "",
-    ) as jwt.JwtPayload;
+    ) as CustomPayload;
+    req.user = { id: verified.sub!, email: verified.email };
     next();
   } catch (e) {
     res.status(401).json({ message: "Invalid token" });

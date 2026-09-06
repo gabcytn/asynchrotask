@@ -15,12 +15,12 @@ export async function loginService(email: string, password: string) {
       throw new Error("Incorrect password");
     }
 
-    const token = jwt.sign({}, JWT_SECRET, {
-      subject: email,
+    const token = jwt.sign({ email }, JWT_SECRET, {
+      subject: user.id,
       expiresIn: JWT_EXP,
     });
 
-    return { user, token };
+    return { user: { id: user.id, email: user.email }, token };
   } catch (e: unknown) {
     throw e;
   }
@@ -32,8 +32,8 @@ export async function registerService(
 ): Promise<AuthenticatedUser> {
   const user = await save({ email, password });
 
-  const token = jwt.sign({}, JWT_SECRET, {
-    subject: user.email,
+  const token = jwt.sign({ email }, JWT_SECRET, {
+    subject: user.id,
     expiresIn: JWT_EXP,
   });
 
