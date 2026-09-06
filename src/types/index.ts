@@ -8,3 +8,11 @@ export type AuthenticatedUser = {
   user: Omit<User, "password">;
   token: string;
 };
+
+export type Task = {
+  id: string;
+  user: Omit<User, "password">;
+  title: string;
+  description: string;
+  status: "PENDING" | "DONE";
+};
