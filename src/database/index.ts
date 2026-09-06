@@ -1,7 +1,4 @@
-import { loadEnvFile } from "node:process";
 import postgres from "postgres";
-
-loadEnvFile();
 
 const sql = postgres({
   host: process.env.DB_HOST || "localhost",
