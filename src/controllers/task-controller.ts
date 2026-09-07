@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import {
   deleteTaskById,
-  findAllTasksByUserEmail,
+  findAllTasksByUserId,
   findTaskById,
   patchUpdateTask,
   saveTask,
@@ -14,7 +14,7 @@ export async function getTasks(req: Request, res: Response) {
     throw new Error("No user found.");
   }
 
-  const tasks = await findAllTasksByUserEmail(user.email);
+  const tasks = await findAllTasksByUserId(user.id);
   res.status(200).json(tasks);
 }
 

@@ -3,15 +3,15 @@ import {
   deleteById,
   existsById,
   findById,
-  findByUserEmail,
+  findByUserId,
   save,
   update,
 } from "../repositories/task-repository.ts";
 import type { Task } from "../types/index.ts";
 
-export async function findAllTasksByUserEmail(email: string) {
+export async function findAllTasksByUserId(id: string) {
   try {
-    const tasks = await findByUserEmail(email);
+    const tasks = await findByUserId(id);
     return tasks;
   } catch (e: unknown) {
     throw e;

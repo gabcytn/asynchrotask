@@ -1,12 +1,11 @@
 import sql from "../database/index.ts";
 import type { Task } from "../types/index.ts";
 
-export async function findByUserEmail(email: string) {
+export async function findByUserId(userId: string) {
   const tasks = await sql`
-    select t.id, t.title, t.description, t.status
-    from tasks t
-    join users u on u.id = t.user_id
-    where u.email = ${email}
+    select id, title, description, status
+    from tasks
+    where user_id = ${userId}
   `;
 
   return tasks;
