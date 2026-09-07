@@ -12,6 +12,21 @@ export async function findByUserEmail(email: string) {
   return tasks;
 }
 
+export async function findById(id: string) {
+  const records = await sql`
+    select id, title, description, status
+    from tasks
+    where id = ${id}
+    limit 1
+  `;
+
+  if (records.length === 0) {
+    throw new Error("Task does not exist.");
+  }
+
+  return records[0];
+}
+
 export async function save(task: Task) {
   const createdAt = new Date();
   const updatedAt = createdAt;

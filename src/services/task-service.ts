@@ -2,6 +2,7 @@ import crypto from "crypto";
 import {
   deleteById,
   existsById,
+  findById,
   findByUserEmail,
   save,
   update,
@@ -13,6 +14,16 @@ export async function findAllTasksByUserEmail(email: string) {
     const tasks = await findByUserEmail(email);
     return tasks;
   } catch (e: unknown) {
+    throw e;
+  }
+}
+
+export async function findTaskById(id: string) {
+  try {
+    const task = await findById(id);
+    return task;
+  } catch (e: unknown) {
+    console.error(e);
     throw e;
   }
 }

@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import {
   deleteTaskById,
   findAllTasksByUserEmail,
+  findTaskById,
   patchUpdateTask,
   saveTask,
 } from "../services/task-service.ts";
@@ -15,6 +16,22 @@ export async function getTasks(req: Request, res: Response) {
 
   const tasks = await findAllTasksByUserEmail(user.email);
   res.status(200).json(tasks);
+}
+
+export async function getTask(req: Request<{ id: string }>, res: Response) {
+  const user = req.user;
+  if (!user) {
+    throw new Error("No user found.");
+  }
+
+  try {
+    const task = await findTaskById(req.params.id);
+    res.status(200).json(task);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return res.status(404).send({ message: e.message });
+    }
+  }
 }
 
 export async function createTask(req: Request, res: Response) {
