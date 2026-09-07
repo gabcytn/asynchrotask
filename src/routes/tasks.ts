@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createTask,
+  deleteTask,
   getTasks,
   updateTask,
 } from "../controllers/task-controller.ts";
@@ -25,5 +26,6 @@ const validationRules = [
 ];
 router.post("/", validationRules, createTask);
 router.patch("/:id", validationRules, updateTask);
+router.delete("/:id", deleteTask);
 
 export default router;

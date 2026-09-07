@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import {
+  deleteTaskById,
   findAllTasksByUserEmail,
   patchUpdateTask,
   saveTask,
@@ -54,7 +55,7 @@ export async function updateTask(req: Request<{ id: string }>, res: Response) {
   }
 
   const { title, description, status } = req.body;
-  patchUpdateTask({
+  await patchUpdateTask({
     id: req.params.id,
     user: { id: user.id, email: user.email },
     title,
@@ -68,4 +69,20 @@ export async function updateTask(req: Request<{ id: string }>, res: Response) {
     description,
     status,
   });
+}
+
+export async function deleteTask(req: Request<{ id: string }>, res: Response) {
+  const user = req.user;
+  if (!user) {
+    throw new Error("No user found.");
+  }
+
+  try {
+    await deleteTaskById(req.params.id);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return res.status(404).json({ message: e.message });
+    }
+  }
+  res.status(204).send();
 }

@@ -1,5 +1,4 @@
 import sql from "../database/index.ts";
-import crypto from "crypto";
 import type { Task } from "../types/index.ts";
 
 export async function findByUserEmail(email: string) {
@@ -30,5 +29,19 @@ export async function update(task: Task) {
     update tasks
     set title = ${task.title}, description = ${task.description}, status = ${task.status}, updated_at = ${updatedAt}
     where id = ${task.id}
+  `;
+}
+
+export async function existsById(id: string) {
+  return await sql`
+    select 1 from tasks
+    where id = ${id}
+  `;
+}
+
+export async function deleteById(id: string) {
+  await sql`
+    delete from tasks
+    where id = ${id}
   `;
 }

@@ -1,5 +1,7 @@
 import crypto from "crypto";
 import {
+  deleteById,
+  existsById,
   findByUserEmail,
   save,
   update,
@@ -32,6 +34,19 @@ export async function patchUpdateTask(task: Task) {
     update(task);
   } catch (e: unknown) {
     console.error(e);
+    throw e;
+  }
+}
+
+export async function deleteTaskById(id: string) {
+  try {
+    const doesTaskExist = await existsById(id);
+    if (doesTaskExist.length === 0) {
+      throw new Error("Task does not exist.");
+    }
+
+    await deleteById(id);
+  } catch (e: unknown) {
     throw e;
   }
 }
