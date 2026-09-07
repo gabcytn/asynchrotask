@@ -41,7 +41,7 @@ export async function patchUpdateTask(task: Task) {
 export async function deleteTaskById(id: string) {
   try {
     const doesTaskExist = await existsById(id);
-    if (doesTaskExist.length === 0) {
+    if (doesTaskExist) {
       throw new Error("Task does not exist.");
     }
 

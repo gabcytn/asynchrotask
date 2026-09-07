@@ -33,10 +33,13 @@ export async function update(task: Task) {
 }
 
 export async function existsById(id: string) {
-  return await sql`
+  const records = await sql`
     select 1 from tasks
     where id = ${id}
+    limit 1
   `;
+
+  return records.length === 1;
 }
 
 export async function deleteById(id: string) {
