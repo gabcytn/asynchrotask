@@ -23,3 +23,12 @@ export async function save(task: Task) {
     (${task.id}, ${task.user.id}, ${task.title}, ${task.description}, ${task.status}, ${createdAt}, ${updatedAt})
   `;
 }
+
+export async function update(task: Task) {
+  const updatedAt = new Date();
+  await sql`
+    update tasks
+    set title = ${task.title}, description = ${task.description}, status = ${task.status}, updated_at = ${updatedAt}
+    where id = ${task.id}
+  `;
+}

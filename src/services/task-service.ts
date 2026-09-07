@@ -1,7 +1,10 @@
 import crypto from "crypto";
-import { findByUserEmail, save } from "../repositories/task-repository.ts";
-import type { Task, User } from "../types/index.ts";
-import type { Request } from "express";
+import {
+  findByUserEmail,
+  save,
+  update,
+} from "../repositories/task-repository.ts";
+import type { Task } from "../types/index.ts";
 
 export async function findAllTasksByUserEmail(email: string) {
   try {
@@ -18,6 +21,15 @@ export async function saveTask(taskDto: Omit<Task, "id">): Promise<Task> {
     const task = { id, ...taskDto };
     save(task);
     return task;
+  } catch (e: unknown) {
+    console.error(e);
+    throw e;
+  }
+}
+
+export async function patchUpdateTask(task: Task) {
+  try {
+    update(task);
   } catch (e: unknown) {
     console.error(e);
     throw e;
