@@ -16,3 +16,5 @@ export type Task = {
   description: string;
   status: "PENDING" | "DONE";
 };
+
+export type TaskDto = Omit<Task, "user">;

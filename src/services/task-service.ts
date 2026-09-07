@@ -7,11 +7,22 @@ import {
   save,
   update,
 } from "../repositories/task-repository.ts";
-import type { Task } from "../types/index.ts";
+import type { Task, TaskDto } from "../types/index.ts";
+import {
+  cacheTasksByUserId,
+  findCachedTasksByUserId,
+} from "./cache-service.ts";
 
-export async function findAllTasksByUserId(id: string) {
+export async function findAllTasksByUserId(id: string): Promise<TaskDto[]> {
   try {
+    const cachedTasks = await findCachedTasksByUserId(id);
+    if (cachedTasks) {
+      return cachedTasks;
+    }
+
     const tasks = await findByUserId(id);
+    await cacheTasksByUserId(tasks, id);
+
     return tasks;
   } catch (e: unknown) {
     throw e;

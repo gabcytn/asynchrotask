@@ -1,14 +1,24 @@
 import sql from "../database/index.ts";
-import type { Task } from "../types/index.ts";
+import type { Task, TaskDto } from "../types/index.ts";
 
-export async function findByUserId(userId: string) {
+export async function findByUserId(userId: string): Promise<TaskDto[]> {
   const tasks = await sql`
     select id, title, description, status
     from tasks
     where user_id = ${userId}
   `;
 
-  return tasks;
+  const res: TaskDto[] = [];
+  tasks.forEach((task) => {
+    res.push({
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.status,
+    });
+  });
+
+  return res;
 }
 
 export async function findById(id: string) {
