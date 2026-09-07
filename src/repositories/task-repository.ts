@@ -14,7 +14,7 @@ export async function findByUserEmail(email: string) {
 
 export async function findById(id: string) {
   const records = await sql`
-    select id, title, description, status
+    select id, user_id, title, description, status
     from tasks
     where id = ${id}
     limit 1

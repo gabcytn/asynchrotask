@@ -7,6 +7,7 @@ import {
   updateTask,
 } from "../controllers/task-controller.ts";
 import { body } from "express-validator";
+import { authorize } from "../middlewares/task-authorization.ts";
 
 const router = Router({ mergeParams: true });
 
@@ -25,7 +26,10 @@ const validationRules = [
     .isIn(["PENDING", "DONE"])
     .withMessage("Status must either be 'PENDING' or 'DONE'"),
 ];
+
 router.post("/", validationRules, createTask);
+
+router.use("/:id", authorize);
 router.patch("/:id", validationRules, updateTask);
 router.get("/:id", getTask);
 router.delete("/:id", deleteTask);

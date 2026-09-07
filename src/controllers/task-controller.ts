@@ -26,7 +26,12 @@ export async function getTask(req: Request<{ id: string }>, res: Response) {
 
   try {
     const task = await findTaskById(req.params.id);
-    res.status(200).json(task);
+    res.status(200).json({
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.description,
+    });
   } catch (e: unknown) {
     if (e instanceof Error) {
       return res.status(404).send({ message: e.message });
